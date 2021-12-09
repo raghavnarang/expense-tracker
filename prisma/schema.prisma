@@ -1,0 +1,38 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Entry {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  message   String
+  amount    Decimal  @default(0)
+
+  // Adjustments
+  parentId    Int?
+  parent      Entry?  @relation("Adjustments", fields: [parentId], references: [id])
+  adjustments Entry[] @relation("Adjustments")
+
+  // Entry Groups
+  groupId Int
+  group   Group @relation("Groups", fields: [groupId], references: [id])
+}
+
+model Group {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String
+
+  // Group Entries
+  entries Entry[] @relation("Groups")
+}
