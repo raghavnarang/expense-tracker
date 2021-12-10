@@ -64,7 +64,7 @@ export const getEntries = (offset: number = 0, limit: number = 10, groupId: numb
   return prisma.entry.findMany(findArgs);
 }
 
-export const editEntry = (entryId: number, message?: string, amount?: number) => {
+export const editEntry = (entryId: number, message?: string, amount?: number, date?: Date) => {
   if (!message || !amount) {
     return false;
   }
@@ -78,9 +78,13 @@ export const editEntry = (entryId: number, message?: string, amount?: number) =>
     updateData.amount = amount;
   }
 
-  prisma.entry.update({
+  if (!!date) {
+    updateData.createdAt = date;
+  }
+
+  return prisma.entry.update({
     where: { id: entryId },
-    data: { message, amount }
+    data: updateData
   })
 };
 

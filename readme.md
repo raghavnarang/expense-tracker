@@ -6,6 +6,7 @@
 - Remove Adjustment
 - Move to Group
 - Get a Group's Entries
+- Get Group (w/ entries)
 - Get Groups
 - Get Groups and Their Entries
 - Edit Group
