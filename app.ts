@@ -1,5 +1,6 @@
 import express, { Request, Response, NextFunction, ErrorRequestHandler } from 'express';
 import groupRouter from './api/group';
+import entryRouter from './api/entry';
 require('dotenv').config();
 
 const app = express();
@@ -10,8 +11,11 @@ app.use(express.urlencoded({ extended: true }));
 
 /** Routers */
 app.use('/group', groupRouter);
+app.use('/entry', entryRouter);
 
-app.get('/', async function(req, res) {
+app.get('/:id', async function(req, res) {
+    const id = req.params.id;
+    
     throw new Error('Hello World');
 });
 

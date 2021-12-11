@@ -7,21 +7,30 @@ export const createEntry = (
   message: string,
   amount: number,
   groupId: number,
-  groupName: string = ''
-): Promise<Entry> => prisma.entry.create({
-  data: {
-    message, amount, group: {
-      connectOrCreate: {
-        where: {
-          id: groupId
-        },
-        create: {
-          title: groupName
+  groupName: string = '',
+  date?: Date
+): Promise<Entry> => {
+  const createData: Prisma.EntryCreateArgs = {
+    data: {
+      message, amount, group: {
+        connectOrCreate: {
+          where: {
+            id: groupId
+          },
+          create: {
+            title: groupName
+          }
         }
       }
     }
+  };
+
+  if (!!date) {
+    createData.data.createdAt = date;
   }
-});
+
+  return prisma.entry.create(createData);
+}
 
 export const adjustEntry = (entryId: number, parentEntryId: number) => prisma.entry.update({
   data: {
@@ -65,8 +74,8 @@ export const getEntries = (offset: number = 0, limit: number = 10, groupId: numb
 }
 
 export const editEntry = (entryId: number, message?: string, amount?: number, date?: Date) => {
-  if (!message || !amount) {
-    return false;
+  if (!message || !amount || !date) {
+    throw new Error('Invalid data for updating entry');
   }
 
   const updateData: Prisma.EntryUpdateInput = {};
