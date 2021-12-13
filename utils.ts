@@ -5,3 +5,8 @@ export type AsyncExpressHandler = (req: Request, res: Response, next: NextFuncti
 export const asyncHandler = (fn: AsyncExpressHandler) => (req: Request, res: Response, next: NextFunction) => {
     return Promise.resolve(fn(req, res, next)).catch(next);
 }
+
+export const slugify = (str: string) =>
+    str.toLowerCase()
+        .replace(/ /g, '-')
+        .replace(/[^\w-]+/g, '');

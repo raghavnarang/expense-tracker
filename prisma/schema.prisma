@@ -32,6 +32,7 @@ model Group {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   title     String
+  groupSlug String   @unique
 
   // Group Entries
   entries Entry[] @relation("Groups")

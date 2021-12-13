@@ -1,11 +1,16 @@
-import express, { Request, Response, NextFunction, ErrorRequestHandler } from 'express';
+import express, { ErrorRequestHandler } from 'express';
+import cors from 'cors';
+
 import groupRouter from './api/group';
 import entryRouter from './api/entry';
+import { getUniqueSlug } from './controllers/group';
+
 require('dotenv').config();
 
 const app = express();
-const port = 3000;
+const port = 4000;
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -13,10 +18,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/group', groupRouter);
 app.use('/entry', entryRouter);
 
-app.get('/:id', async function(req, res) {
-    const id = req.params.id;
-    
-    throw new Error('Hello World');
+app.get('/', async function (req, res) {
+    const result = await getUniqueSlug('Hello World');
+
+    res.status(200).json(result);
 });
 
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {

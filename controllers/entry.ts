@@ -2,8 +2,9 @@ import prisma from '../client';
 import { Entry } from '../types';
 
 import { Prisma } from '@prisma/client';
+import { getUniqueSlug } from './group';
 
-export const createEntry = (
+export const createEntry = async (
   message: string,
   amount: number,
   groupId: number,
@@ -18,7 +19,8 @@ export const createEntry = (
             id: groupId
           },
           create: {
-            title: groupName
+            title: groupName,
+            groupSlug: await getUniqueSlug(groupName)
           }
         }
       }
@@ -29,7 +31,7 @@ export const createEntry = (
     createData.data.createdAt = date;
   }
 
-  return prisma.entry.create(createData);
+  return await prisma.entry.create(createData);
 }
 
 export const adjustEntry = (entryId: number, parentEntryId: number) => prisma.entry.update({

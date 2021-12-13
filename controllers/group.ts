@@ -1,16 +1,20 @@
 import prisma from "../client";
 import { Prisma } from '@prisma/client';
+import { slugify } from "../utils";
 
 /** Create Group */
-export const createGroup = (title: string) => prisma.group.create({
-    data: { title }
-});
+export const createGroup = async (title: string) => {
+    const slug = await getUniqueSlug(title);
+    return await prisma.group.create({
+        data: { title, groupSlug: slug }
+    });
+}
 
 /** Get Groups (Optional: Include Entries) */
 export const getGroups = (
     offset: number = 0,
     limit: number = 10,
-    includeEntries: boolean= false,
+    includeEntries: boolean = false,
     entryOffset: number = 0,
     entryLimit: number = 10
 ) => {
@@ -64,4 +68,24 @@ export const deleteGroup = async (groupId: number, deleteOrMove: DeleteOrMoveEnt
 
     const query = prisma.entry.updateMany({ data: { groupId: moveToGroupId }, where: { groupId } });
     return await prisma.$transaction([query, deleteQuery]);
+}
+
+/** Get Unique Slug */
+export const getUniqueSlug = async (groupName: string) => {
+    const slug = slugify(groupName);
+
+    const result = await prisma.group.findMany({
+        where: { groupSlug: { startsWith: slug } },
+        select: { groupSlug: true }
+    });
+
+    if (!result.length) {
+        return slug;
+    }
+
+    let slugId = 0;
+    const slugs = result.map(group => group.groupSlug);
+    while(slugs.includes(`${slug}-${++slugId}`));
+
+    return `${slug}-${slugId}`;
 }
