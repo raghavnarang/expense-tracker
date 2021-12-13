@@ -1,7 +1,7 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import { QueryClient, QueryClientProvider } from 'react-query';
-import Toast from '../components/Toast';
+import Toast from '../components/global/Toast';
 import { useEffect, useRef, useState } from 'react';
 import { ToastContext } from '../utils';
 
