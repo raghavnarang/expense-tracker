@@ -3,17 +3,17 @@ import { TiDelete, TiEdit } from 'react-icons/ti';
 import EditEntry from './EditEntry';
 
 type propsType = {
-    onSubmit?: (message: string, amount: number) => void,
+    onEdit?: (message: string, amount: number) => void,
     onRequestDelete?: () => void,
     message: string,
     amount: number
 }
 
-const Entry: React.FC<propsType> = ({ onSubmit, onRequestDelete, message, amount }) => {
+const Entry: React.FC<propsType> = ({ onEdit, onRequestDelete, message, amount }) => {
     const [isEdit, setIsEdit] = useState(false);
 
     const onEditSubmit = (message: string, amount: number) => {
-        !!onSubmit && onSubmit(message, amount);
+        !!onEdit && onEdit(message, amount);
         setIsEdit(false);
     }
 

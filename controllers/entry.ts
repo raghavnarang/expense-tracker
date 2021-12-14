@@ -76,7 +76,7 @@ export const getEntries = (offset: number = 0, limit: number = 10, groupId: numb
 }
 
 export const editEntry = (entryId: number, message?: string, amount?: number, date?: Date) => {
-  if (!message || !amount || !date) {
+  if (!message && !amount && !date) {
     throw new Error('Invalid data for updating entry');
   }
 

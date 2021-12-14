@@ -1,6 +1,3 @@
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-
 import useFetchEntries from "../../hooks/useFetchEntries";
 import useFetchGroups from "../../hooks/useFetchGroups";
 
@@ -11,20 +8,11 @@ import EntryHead from "../global/EntryHead";
 import EntrySkeleton from "../global/EntrySkeleton";
 
 import EntryAdd from "../main/EntryAdd";
+import EntryList from "./EntryList";
 
 const Entries: React.FC = () => {
-    const router = useRouter();
-    const groupSlug = Array.isArray(router.query.slug) && router.query.slug.length > 0 ? router.query.slug[0] : '';
-
-    const { isLoading: isGroupsLoading, data: groups } = useFetchGroups();
-
-    let groupId: number | undefined;
-    if (!!groups && groups.length > 0) {
-        groupId = !!groupSlug ? groups.find(group => group.groupSlug === groupSlug)?.id : groups[0].id;
-        groupId = !!groupId ? groupId : groups[0].id;
-    }
-
-    const { isLoading, isError, data: entries = [], refetch } = useFetchEntries(groupId);
+    const { isLoading: isGroupsLoading, currentGroupId } = useFetchGroups();
+    const { isLoading, isError, data: entries = [], refetch } = useFetchEntries(currentGroupId);
 
     if (isError) {
         return <div className={'h-4/6 overflow-y-auto flex justify-center'}>
@@ -49,19 +37,14 @@ const Entries: React.FC = () => {
 
     let totalExpenses = 0;
     if (!!entries && entries.length > 0) {
-        totalExpenses = entries.reduce<number>((total: number, entry: EntryType) => total + entry.amount, 0);
+        totalExpenses = entries.reduce<number>((total: number, entry: EntryType) => total + parseFloat(entry.amount.toString()), 0);
     }
 
     return <>
         <div className={'h-5/6 overflow-y-auto'}>
             <EntryHead />
-            {entries.length > 0 && entries.map(entry =>
-                <Entry key={entry.id} message={entry.message} amount={entry.amount} />
-            )}
-            {entries.length === 0 && <div className={'flex justify-center'}>
-                <p className={'my-5'}>No Expenses found</p>
-            </div>}
-            {groupId && <EntryAdd groupId={groupId} onSuccess={() => refetch()} />}
+            {currentGroupId && <EntryList groupId={currentGroupId} />}
+            {currentGroupId && <EntryAdd groupId={currentGroupId} onSuccess={() => refetch()} />}
         </div>
         <div className={'flex items-center text-gray-500 pt-2 border-t border-gray-300'}>
             <p className={'w-7/12 py-2 px-2 rounded outline-none text-right'}>Total:</p>

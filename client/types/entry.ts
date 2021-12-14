@@ -14,3 +14,9 @@ export type EntryInput = {
     amount: number,
     groupId: number
 }
+
+export type EditEntryInput = {
+    id: number, 
+    message: string,
+    amount: number,
+};
