@@ -4,6 +4,7 @@ import useCreateGroup from "../../hooks/useCreateGroup";
 import useFetchGroups from "../../hooks/useFetchGroups";
 import useToast from "../../hooks/useToast";
 import TabsComponent, { TabsSkeleton } from "../global/Tabs";
+import GroupSettings from "./GroupSettings";
 
 const Tabs: React.FC = () => {
     const { isLoading, isError, data: groups, currentGroupSlug, refetch } = useFetchGroups();
@@ -39,7 +40,10 @@ const Tabs: React.FC = () => {
         !!slug && router.push(`/${slug}`);
     }
 
-    return isLoading ? <TabsSkeleton /> : <TabsComponent onTabAdd={onTabAdd} onTabClick={onTabClick} tabs={groupTabs} currentTab={currentGroupSlug} />
+    return isLoading ? <TabsSkeleton /> : 
+    <TabsComponent onTabAdd={onTabAdd} onTabClick={onTabClick} tabs={groupTabs} currentTab={currentGroupSlug}>
+        <GroupSettings />
+    </TabsComponent>
 }
 
 export default Tabs;

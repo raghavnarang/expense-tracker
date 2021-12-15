@@ -11,7 +11,7 @@ const fetchGroups = async () => {
 };
 
 const useFetchGroups = () => {
-  const query = useQuery(["group-list"], fetchGroups);
+  const query = useQuery(["group-list"], fetchGroups, { staleTime: 1000 });
 
   const router = useRouter();
   let groupSlug = Array.isArray(router.query.slug) && router.query.slug.length > 0 ? router.query.slug[0] : undefined;
@@ -25,7 +25,7 @@ const useFetchGroups = () => {
     groupId = !!groupId ? groupId : groups[0].id;
 
     /** Get Group Slug */
-    if(!groupSlug && !!groupId) {
+    if (!groupSlug && !!groupId) {
       groupSlug = groups.find(group => group.id === groupId)?.groupSlug;
     }
   }

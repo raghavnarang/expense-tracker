@@ -16,7 +16,7 @@ type propsType = {
     currentTab?: string
 }
 
-const Tabs: React.FC<propsType> = ({ tabs, onTabClick, onTabAdd, currentTab, isAddLoading }) => {
+const Tabs: React.FC<propsType> = ({ tabs, onTabClick, onTabAdd, currentTab, isAddLoading, children }) => {
 
     const [newTab, setNewTab] = useState(false);
     const [newTabText, setNewTabText] = useState('');
@@ -75,6 +75,7 @@ const Tabs: React.FC<propsType> = ({ tabs, onTabClick, onTabAdd, currentTab, isA
                 autoFocus={true}
             />
         </div>}
+        {children}
     </div>;
 }
 
