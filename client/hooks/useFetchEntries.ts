@@ -16,7 +16,7 @@ const fetchEntries: QueryFunction<Entry[]> = async ({ queryKey }) => {
 }
 
 const useFetchEntries = (groupId?: number, offset: number = 0, limit: number = 10) => {
-    return useQuery<Entry[]>(['group-entries', groupId, offset, limit], fetchEntries, { enabled: !!groupId });
+    return useQuery<Entry[]>(['group-entries', groupId, offset, limit], fetchEntries, { enabled: !!groupId, staleTime: 1000 });
 };
 
 export default useFetchEntries;
