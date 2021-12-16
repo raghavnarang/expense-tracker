@@ -37,14 +37,14 @@ const GroupSettings: React.FC = () => {
         if (deleteGroup.isSuccess) {
             refetch();
             deleteGroup.reset();
-            showToast('Group Edited Successfully!');
+            showToast('Group Deleted Successfully!');
         }
     }, [deleteGroup.isSuccess]);
 
     useEffect(() => {
         if (deleteGroup.isError) {
             deleteGroup.reset();
-            showToast('Unable to edit group!');
+            showToast('Unable to delete group!');
         }
     }, [deleteGroup.isError]);
 

@@ -45,7 +45,7 @@ const TooltipConfirmation: React.FC<propsType> = ({ text, buttons, radios, selec
 
             {/** Radio */}
             {!!radios && Object.keys(radios).map(radio =>
-                <label className={'text-gray-300 text-sm flex items-center my-2'}>
+                <label className={'text-gray-300 text-sm flex items-center my-2'} key={radio}>
                     <input
                         className={'mr-2'}
                         type='radio'

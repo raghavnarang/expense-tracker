@@ -11,26 +11,22 @@ const fetchGroups = async () => {
 };
 
 const useFetchGroups = () => {
-  const query = useQuery(["group-list"], fetchGroups, {refetchOnMount: false});
-
-  const router = useRouter();
-  let groupSlug = Array.isArray(router.query.slug) && router.query.slug.length > 0 ? router.query.slug[0] : undefined;
-
+  const query = useQuery(["group-list"], fetchGroups, { refetchOnMount: false });
   const groups = query.data;
 
-  let groupId: number | undefined;
-  if (!!groups && groups.length > 0) {
-    /** Get Group ID */
-    groupId = !!groupSlug ? groups.find(group => group.groupSlug === groupSlug)?.id : groups[0].id;
-    groupId = !!groupId ? groupId : groups[0].id;
+  const router = useRouter();
+  const routerSlug = Array.isArray(router.query.slug) && router.query.slug.length > 0 ? router.query.slug[0] : undefined;
 
-    /** Get Group Slug */
-    if (!groupSlug && !!groupId) {
-      groupSlug = groups.find(group => group.id === groupId)?.groupSlug;
+  let currentGroup: Group | undefined;
+  if (!!groups && groups.length > 0) {
+    currentGroup = groups.find(group => group.groupSlug === routerSlug);
+
+    if (!currentGroup) {
+      currentGroup = groups[0];
     }
   }
 
-  return { ...query, currentGroupId: groupId, currentGroupSlug: groupSlug };
+  return { ...query, currentGroupId: currentGroup?.id, currentGroupSlug: currentGroup?.groupSlug };
 };
 
 export default useFetchGroups;

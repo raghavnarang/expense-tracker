@@ -43,7 +43,7 @@ const Entries: React.FC = () => {
         <div className={'h-5/6 overflow-y-auto'}>
             <EntryHead />
             <EntryList entries={entries} refetchEntries={refetch} />
-            {currentGroupId && <EntryAdd groupId={currentGroupId} onSuccess={() => refetch()} />}
+            {currentGroupId && <EntryAdd groupId={currentGroupId} onSuccess={refetch} />}
         </div>
         <div className={'flex items-center text-gray-500 pt-2 border-t border-gray-300'}>
             <p className={'w-7/12 py-2 px-2 rounded outline-none text-right'}>Total:</p>
