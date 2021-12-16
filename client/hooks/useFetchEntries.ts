@@ -1,4 +1,4 @@
-import { QueryFunction, QueryFunctionContext, QueryKey, useQuery } from "react-query";
+import { QueryFunction, useQuery } from "react-query";
 import axios from 'axios';
 
 import { getApiUrl } from "../utils";
@@ -16,7 +16,7 @@ const fetchEntries: QueryFunction<Entry[]> = async ({ queryKey }) => {
 }
 
 const useFetchEntries = (groupId?: number, offset: number = 0, limit: number = 10) => {
-    return useQuery<Entry[]>(['group-entries', groupId, offset, limit], fetchEntries, { enabled: !!groupId, staleTime: 1000 });
+    return useQuery<Entry[]>(['group-entries', groupId, offset, limit], fetchEntries, { enabled: !!groupId });
 };
 
 export default useFetchEntries;

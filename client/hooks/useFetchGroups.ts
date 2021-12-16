@@ -11,7 +11,7 @@ const fetchGroups = async () => {
 };
 
 const useFetchGroups = () => {
-  const query = useQuery(["group-list"], fetchGroups, { staleTime: 1000 });
+  const query = useQuery(["group-list"], fetchGroups, {refetchOnMount: false});
 
   const router = useRouter();
   let groupSlug = Array.isArray(router.query.slug) && router.query.slug.length > 0 ? router.query.slug[0] : undefined;

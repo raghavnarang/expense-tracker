@@ -3,7 +3,6 @@ import useFetchGroups from "../../hooks/useFetchGroups";
 
 import EntryType from "../../types/entry";
 
-import Entry from "../global/Entry";
 import EntryHead from "../global/EntryHead";
 import EntrySkeleton from "../global/EntrySkeleton";
 
@@ -43,7 +42,7 @@ const Entries: React.FC = () => {
     return <>
         <div className={'h-5/6 overflow-y-auto'}>
             <EntryHead />
-            {currentGroupId && <EntryList groupId={currentGroupId} />}
+            <EntryList entries={entries} refetchEntries={refetch} />
             {currentGroupId && <EntryAdd groupId={currentGroupId} onSuccess={() => refetch()} />}
         </div>
         <div className={'flex items-center text-gray-500 pt-2 border-t border-gray-300'}>

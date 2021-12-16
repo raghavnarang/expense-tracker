@@ -2,14 +2,18 @@ import { useEffect } from "react";
 
 import useEditEntry from "../../hooks/useEditEntry";
 import useDeleteEntry from "../../hooks/useDeleteEntry";
-import useFetchEntries from "../../hooks/useFetchEntries";
 import useToast from "../../hooks/useToast";
 
 import EntryComponent from "../global/Entry";
 import EntrySkeleton from "../global/EntrySkeleton";
+import Entry from "../../types/entry";
 
-const EntryList: React.FC<{ groupId: number }> = ({ groupId }) => {
-    const { data: entries = [], refetch } = useFetchEntries(groupId);
+type propTypes = {
+    entries: Entry[], 
+    refetchEntries: () => void 
+};
+
+const EntryList: React.FC<propTypes> = ({ entries, refetchEntries: refetch }) => {
     const editEntry = useEditEntry();
     const deleteEntry = useDeleteEntry();
     const showToast = useToast();
@@ -45,7 +49,7 @@ const EntryList: React.FC<{ groupId: number }> = ({ groupId }) => {
     }, [deleteEntry.isError]);
 
     if (entries.length === 0) {
-        return <div className={'flex justify-center'}>
+        return <div>
             <p className={'my-5'}>No Expenses found</p>
         </div>
     }

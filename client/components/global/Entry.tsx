@@ -37,8 +37,8 @@ const Entry: React.FC<propsType> = ({ onRequestEdit, onRequestDelete, message, a
     }
 
     return <div className={'flex items-center text-gray-700 mb-2'}>
-        <p className={'w-7/12 py-2 px-2 rounded mr-5 outline-none'}>{message}</p>
-        <p className={'w-3/12 py-2 px-2 rounded mr-5 outline-none'}>{amount}</p>
+        <p className={'w-7/12 py-2 rounded mr-5 outline-none'}>{message}</p>
+        <p className={'w-3/12 py-2 rounded mr-5 outline-none'}>{amount}</p>
         <div className={'w-2/12'}>
             <button
                 className={'rounded-full border border-blue-500 p-1 mr-2'}
