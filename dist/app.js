@@ -46,7 +46,7 @@ var entry_1 = __importDefault(require("./api/entry"));
 var group_2 = require("./controllers/group");
 require('dotenv').config();
 var app = (0, express_1["default"])();
-var port = 4000;
+var port = 3000;
 app.use((0, cors_1["default"])());
 app.use(express_1["default"].json());
 app.use(express_1["default"].urlencoded({ extended: true }));
