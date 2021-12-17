@@ -1,0 +1,1 @@
+{"version":3,"file":"useDeleteEntry.js","sourceRoot":"","sources":["../../../client/hooks/useDeleteEntry.ts"],"names":[],"mappings":";;;;;AAAA,gDAA0B;AAC1B,2CAA0C;AAC1C,kCAAqC;AAErC,IAAM,cAAc,GAAG,cAAM,OAAA,IAAA,yBAAW,EAAC,UAAC,EAAU;IAChD,OAAO,kBAAK,CAAC,QAAM,CAAA,CAAC,IAAA,iBAAS,EAAC,gBAAS,EAAE,CAAE,CAAC,CAAC,CAAA;AACjD,CAAC,CAAC,EAF2B,CAE3B,CAAC;AAEH,qBAAe,cAAc,CAAC"}

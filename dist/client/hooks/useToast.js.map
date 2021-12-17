@@ -1,0 +1,1 @@
+{"version":3,"file":"useToast.js","sourceRoot":"","sources":["../../../client/hooks/useToast.ts"],"names":[],"mappings":";;AAAA,+BAAmC;AACnC,kCAAwC;AAExC,IAAM,QAAQ,GAAG;IACL,IAAA,SAAS,GAAK,IAAA,kBAAU,EAAC,oBAAY,CAAC,UAA7B,CAA8B;IAC/C,OAAO,SAAS,CAAC;AACrB,CAAC,CAAA;AAED,qBAAe,QAAQ,CAAC"}

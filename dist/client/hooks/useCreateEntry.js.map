@@ -1,0 +1,1 @@
+{"version":3,"file":"useCreateEntry.js","sourceRoot":"","sources":["../../../client/hooks/useCreateEntry.ts"],"names":[],"mappings":";;;;;AAAA,gDAA0B;AAC1B,2CAA0C;AAE1C,kCAAqC;AAErC,IAAM,cAAc,GAAG,cAAM,OAAA,IAAA,yBAAW,EAAC,UAAC,KAAiB;IACvD,OAAO,kBAAK,CAAC,IAAI,CAAC,IAAA,iBAAS,EAAC,OAAO,CAAC,EAAE,KAAK,CAAC,CAAA;AAChD,CAAC,CAAC,EAF2B,CAE3B,CAAC;AAEH,qBAAe,cAAc,CAAC"}
