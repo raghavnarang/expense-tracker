@@ -76,7 +76,7 @@ var errorHandler = function (err, req, res, next) {
     res.json({ error: err.message });
 };
 app.use(errorHandler);
-app.listen(port, function () {
+app.listen(process.env.PORT || port, function () {
     console.log("Server is running on localhost:".concat(process.env.PORT || port));
 });
 //# sourceMappingURL=app.js.map
