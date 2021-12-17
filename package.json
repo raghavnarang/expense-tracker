@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon app.ts",
     "start": "node dist/app.js",
-    "migrate": "prisma migrate dev",
+    "migrate": "prisma migrate deploy",
     "build": "tsc",
     "heroku-postbuild": "npm run migrate"
   },
