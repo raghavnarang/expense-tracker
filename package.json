@@ -8,7 +8,8 @@
     "dev": "nodemon app.ts",
     "start": "node dist/app.js",
     "migrate": "prisma migrate dev",
-    "build": "tsc"
+    "build": "tsc",
+    "heroku-postbuild": "npm run migrate"
   },
   "keywords": [],
   "author": "",
