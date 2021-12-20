@@ -3,10 +3,10 @@ import { Prisma } from '@prisma/client';
 import { slugify } from "../utils";
 
 /** Create Group */
-export const createGroup = async (title: string) => {
+export const createGroup = async (title: string, userId: string) => {
     const slug = await getUniqueSlug(title);
     return await prisma.group.create({
-        data: { title, groupSlug: slug }
+        data: { title, groupSlug: slug, userId }
     });
 }
 
@@ -16,7 +16,8 @@ export const getGroups = (
     limit: number = 10,
     includeEntries: boolean = false,
     entryOffset: number = 0,
-    entryLimit: number = 10
+    entryLimit: number = 10,
+    userId: string
 ) => {
     const include: Prisma.GroupInclude = {
         entries: false
@@ -26,7 +27,7 @@ export const getGroups = (
         include.entries = { skip: entryOffset, take: entryLimit }
     }
 
-    return prisma.group.findMany({ skip: offset, take: limit, include });
+    return prisma.group.findMany({ skip: offset, take: limit, include, where: { userId } });
 }
 
 /** Get Group (with Entries w/ Pagination) */
@@ -85,7 +86,7 @@ export const getUniqueSlug = async (groupName: string) => {
 
     let slugId = 0;
     const slugs = result.map(group => group.groupSlug);
-    while(slugs.includes(`${slug}-${++slugId}`));
+    while (slugs.includes(`${slug}-${++slugId}`));
 
     return `${slug}-${slugId}`;
 }

@@ -4,6 +4,7 @@ import cors from 'cors';
 import groupRouter from './api/group';
 import entryRouter from './api/entry';
 import { getUniqueSlug } from './controllers/group';
+import verifyAuth from './middleware/validate-auth';
 
 require('dotenv').config();
 
@@ -13,6 +14,8 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(verifyAuth);
 
 /** Routers */
 app.use('/group', groupRouter);

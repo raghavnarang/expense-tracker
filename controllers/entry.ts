@@ -9,18 +9,20 @@ export const createEntry = async (
   amount: number,
   groupId: number,
   groupName: string = '',
+  userId: string,
   date?: Date
 ): Promise<Entry> => {
   const createData: Prisma.EntryCreateArgs = {
     data: {
-      message, amount, group: {
+      userId, message, amount, group: {
         connectOrCreate: {
           where: {
             id: groupId
           },
           create: {
             title: groupName,
-            groupSlug: await getUniqueSlug(groupName)
+            groupSlug: await getUniqueSlug(groupName),
+            userId
           }
         }
       }
@@ -62,14 +64,16 @@ export const moveToGroup = (entryId: number, groupId: number) => prisma.entry.up
   }
 });
 
-export const getEntries = (offset: number = 0, limit: number = 10, groupId: number = 0) => {
+export const getEntries = (offset: number = 0, limit: number = 10, groupId: number = 0, userId: string) => {
   const findArgs: Prisma.EntryFindManyArgs = {
     skip: offset,
     take: limit,
   }
 
+  findArgs.where = { userId };
+
   if (!!groupId) {
-    findArgs.where = { groupId }
+    findArgs.where.groupId = groupId;
   }
 
   return prisma.entry.findMany(findArgs);

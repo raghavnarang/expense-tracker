@@ -25,6 +25,9 @@ model Entry {
   // Entry Groups
   groupId Int
   group   Group @relation("Groups", fields: [groupId], references: [id])
+
+  // Firebase User
+  userId String
 }
 
 model Group {
@@ -36,4 +39,7 @@ model Group {
 
   // Group Entries
   entries Entry[] @relation("Groups")
+
+  // Firebase User
+  userId String
 }

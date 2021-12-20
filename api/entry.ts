@@ -10,8 +10,9 @@ const router = express.Router();
 /** Create Entry */
 router.post('/', createEntryValidate, asyncHandler(async (req, res) => {
     const { message, amount, groupId, groupName, date } = res.locals.data;
+    const { userId } = res.locals.user;
 
-    const result = await createEntry(message, amount, groupId, groupName, date);
+    const result = await createEntry(message, amount, groupId, groupName, userId, date);
     return res.status(200).json(result);
 }));
 
@@ -42,8 +43,9 @@ router.post('/:id/move', moveToGroupValidate, asyncHandler(async (req, res) => {
 /** List Entries */
 router.get('/list', getEntriesValidate, asyncHandler(async (req, res) => {
     const { offset, limit, groupId } = res.locals.data;
+    const { userId } = res.locals.user;
 
-    const result = await getEntries(offset, limit, groupId);
+    const result = await getEntries(offset, limit, groupId, userId);
     return res.status(200).json(result);
 }));
 
