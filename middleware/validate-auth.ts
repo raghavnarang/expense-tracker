@@ -27,7 +27,7 @@ const verifyAuth = (req: Request, res: Response, next: NextFunction) => {
                 ]
             };
             const logger = winston.createLogger(logConfiguration);
-            logger.debug(decodedToken);
+            logger.error(decodedToken);
             res.locals.user = {
                 email: decodedToken.email,
                 userId: decodedToken.user_id
