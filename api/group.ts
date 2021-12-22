@@ -9,7 +9,6 @@ const router = express.Router();
 
 /** Get Groups */
 router.get('/list', getGroupsValidate, asyncHandler(async (req, res) => {
-    console.log(res.locals);
     const { offset, limit, includeEntries, entryOffset, entryLimit } = res.locals.data;
     const { userId } = res.locals.user;
 
@@ -20,6 +19,7 @@ router.get('/list', getGroupsValidate, asyncHandler(async (req, res) => {
 /** Create Group */
 router.post('/', createGroupValidate, asyncHandler(async (req, res) => {
     const { title } = res.locals.data;
+    console.log(res.locals);
     const { userId } = res.locals.user;
 
     const result = await createGroup(title, userId);
