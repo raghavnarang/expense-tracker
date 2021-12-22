@@ -29,7 +29,8 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "firebase-admin": "^10.0.1",
-    "joi": "^17.5.0"
+    "joi": "^17.5.0",
+    "winston": "^3.3.3"
   },
   "nodemonConfig": {
     "env": {

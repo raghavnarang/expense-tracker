@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import admin from 'firebase-admin';
 import { getAuth } from 'firebase-admin/auth';
+import winston from 'winston';
 
 const serviceAccount = require("../fb-auth.json");
 
@@ -20,6 +21,13 @@ const verifyAuth = (req: Request, res: Response, next: NextFunction) => {
         .verifyIdToken(token)
         .then((decodedToken) => {
             console.log(decodedToken);
+            const logConfiguration = {
+                'transports': [
+                    new winston.transports.Console()
+                ]
+            };
+            const logger = winston.createLogger(logConfiguration);
+            logger.debug(decodedToken);
             res.locals.user = {
                 email: decodedToken.email,
                 userId: decodedToken.user_id
