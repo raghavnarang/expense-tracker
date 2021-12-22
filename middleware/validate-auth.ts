@@ -20,14 +20,7 @@ const verifyAuth = (req: Request, res: Response, next: NextFunction) => {
     auth
         .verifyIdToken(token)
         .then((decodedToken) => {
-            console.log(decodedToken);
-            const logConfiguration = {
-                'transports': [
-                    new winston.transports.Console()
-                ]
-            };
-            const logger = winston.createLogger(logConfiguration);
-            logger.error(decodedToken);
+            winston.log('info', 'Hello log files!', decodedToken);
             res.locals.user = {
                 email: decodedToken.email,
                 userId: decodedToken.user_id
