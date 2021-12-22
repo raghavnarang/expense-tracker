@@ -9,6 +9,7 @@ const router = express.Router();
 
 /** Get Groups */
 router.get('/list', getGroupsValidate, asyncHandler(async (req, res) => {
+    console.log(res.locals);
     const { offset, limit, includeEntries, entryOffset, entryLimit } = res.locals.data;
     const { userId } = res.locals.user;
 
