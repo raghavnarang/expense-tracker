@@ -51,6 +51,16 @@ var port = 3000;
 app.use((0, cors_1["default"])());
 app.use(express_1["default"].json());
 app.use(express_1["default"].urlencoded({ extended: true }));
+/** Allow origin & options middleware */
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    if (req.method === "OPTIONS") {
+        res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
+        return res.status(200).json({});
+    }
+    next();
+});
 app.use(validate_auth_1["default"]);
 /** Routers */
 app.use('/group', group_1["default"]);
