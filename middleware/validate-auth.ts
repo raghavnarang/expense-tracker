@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import admin from 'firebase-admin';
 import { getAuth } from 'firebase-admin/auth';
-import herokuLog from 'heroku-logger';
 
 const serviceAccount = require("../fb-auth.json");
 
