@@ -11,21 +11,23 @@ require('dotenv').config();
 const app = express();
 const port = 3000;
 
-// app.use(cors({
-//     origin: 'https://eager-fermi-101ff4.netlify.app',
-//     optionsSuccessStatus: 200
-// }));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 /** Allow origin & options middleware */
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", '*');
-    res.header("Access-Control-Allow-Credentials", 'true');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    );
+    if (req.method === "OPTIONS") {
+        res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
+        return res.status(200).json({});
+    }
     next();
-  });
+});
 
 app.use(verifyAuth);
 

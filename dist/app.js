@@ -40,6 +40,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 exports.__esModule = true;
 var express_1 = __importDefault(require("express"));
+var cors_1 = __importDefault(require("cors"));
 var group_1 = __importDefault(require("./api/group"));
 var entry_1 = __importDefault(require("./api/entry"));
 var group_2 = require("./controllers/group");
@@ -47,18 +48,17 @@ var validate_auth_1 = __importDefault(require("./middleware/validate-auth"));
 require('dotenv').config();
 var app = (0, express_1["default"])();
 var port = 3000;
-// app.use(cors({
-//     origin: 'https://eager-fermi-101ff4.netlify.app',
-//     optionsSuccessStatus: 200
-// }));
+app.use((0, cors_1["default"])());
 app.use(express_1["default"].json());
 app.use(express_1["default"].urlencoded({ extended: true }));
 /** Allow origin & options middleware */
 app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", '*');
-    res.header("Access-Control-Allow-Credentials", 'true');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    if (req.method === "OPTIONS") {
+        res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
+        return res.status(200).json({});
+    }
     next();
 });
 app.use(validate_auth_1["default"]);
