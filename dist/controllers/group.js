@@ -43,7 +43,7 @@ exports.getUniqueSlug = exports.deleteGroup = exports.DeleteOrMoveEntries = expo
 var client_1 = __importDefault(require("../client"));
 var utils_1 = require("../utils");
 /** Create Group */
-var createGroup = function (title) { return __awaiter(void 0, void 0, void 0, function () {
+var createGroup = function (title, userId) { return __awaiter(void 0, void 0, void 0, function () {
     var slug;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -51,7 +51,7 @@ var createGroup = function (title) { return __awaiter(void 0, void 0, void 0, fu
             case 1:
                 slug = _a.sent();
                 return [4 /*yield*/, client_1["default"].group.create({
-                        data: { title: title, groupSlug: slug }
+                        data: { title: title, groupSlug: slug, userId: userId }
                     })];
             case 2: return [2 /*return*/, _a.sent()];
         }
@@ -59,7 +59,7 @@ var createGroup = function (title) { return __awaiter(void 0, void 0, void 0, fu
 }); };
 exports.createGroup = createGroup;
 /** Get Groups (Optional: Include Entries) */
-var getGroups = function (offset, limit, includeEntries, entryOffset, entryLimit) {
+var getGroups = function (offset, limit, includeEntries, entryOffset, entryLimit, userId) {
     if (offset === void 0) { offset = 0; }
     if (limit === void 0) { limit = 10; }
     if (includeEntries === void 0) { includeEntries = false; }
@@ -71,7 +71,7 @@ var getGroups = function (offset, limit, includeEntries, entryOffset, entryLimit
     if (includeEntries) {
         include.entries = { skip: entryOffset, take: entryLimit };
     }
-    return client_1["default"].group.findMany({ skip: offset, take: limit, include: include });
+    return client_1["default"].group.findMany({ skip: offset, take: limit, include: include, where: { userId: userId } });
 };
 exports.getGroups = getGroups;
 /** Get Group (with Entries w/ Pagination) */

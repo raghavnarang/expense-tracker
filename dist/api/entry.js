@@ -47,12 +47,13 @@ var entry_validate_input_1 = require("./middleware/entry-validate-input");
 var router = express_1["default"].Router();
 /** Create Entry */
 router.post('/', entry_validate_input_1.createEntryValidate, (0, utils_1.asyncHandler)(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, message, amount, groupId, groupName, date, result;
+    var _a, message, amount, groupId, groupName, date, userId, result;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 _a = res.locals.data, message = _a.message, amount = _a.amount, groupId = _a.groupId, groupName = _a.groupName, date = _a.date;
-                return [4 /*yield*/, (0, entry_1.createEntry)(message, amount, groupId, groupName, date)];
+                userId = res.locals.user.userId;
+                return [4 /*yield*/, (0, entry_1.createEntry)(message, amount, groupId, groupName, userId, date)];
             case 1:
                 result = _b.sent();
                 return [2 /*return*/, res.status(200).json(result)];
@@ -103,12 +104,13 @@ router.post('/:id/move', entry_validate_input_1.moveToGroupValidate, (0, utils_1
 }); }));
 /** List Entries */
 router.get('/list', entry_validate_input_1.getEntriesValidate, (0, utils_1.asyncHandler)(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, offset, limit, groupId, result;
+    var _a, offset, limit, groupId, userId, result;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 _a = res.locals.data, offset = _a.offset, limit = _a.limit, groupId = _a.groupId;
-                return [4 /*yield*/, (0, entry_1.getEntries)(offset, limit, groupId)];
+                userId = res.locals.user.userId;
+                return [4 /*yield*/, (0, entry_1.getEntries)(offset, limit, groupId, userId)];
             case 1:
                 result = _b.sent();
                 return [2 /*return*/, res.status(200).json(result)];

@@ -42,7 +42,7 @@ exports.__esModule = true;
 exports.deleteEntry = exports.editEntry = exports.getEntries = exports.moveToGroup = exports.unadjustEntry = exports.adjustEntry = exports.createEntry = void 0;
 var client_1 = __importDefault(require("../client"));
 var group_1 = require("./group");
-var createEntry = function (message, amount, groupId, groupName, date) {
+var createEntry = function (message, amount, groupId, groupName, userId, date) {
     if (groupName === void 0) { groupName = ''; }
     return __awaiter(void 0, void 0, void 0, function () {
         var createData;
@@ -52,6 +52,7 @@ var createEntry = function (message, amount, groupId, groupName, date) {
                 case 0:
                     _a = {};
                     _b = {
+                        userId: userId,
                         message: message,
                         amount: amount
                     };
@@ -67,6 +68,7 @@ var createEntry = function (message, amount, groupId, groupName, date) {
                     return [4 /*yield*/, (0, group_1.getUniqueSlug)(groupName)];
                 case 1:
                     createData = (_a.data = (_b.group = (_c.connectOrCreate = (_d.create = (_e.groupSlug = _f.sent(),
+                        _e.userId = userId,
                         _e),
                         _d),
                         _c),
@@ -110,7 +112,7 @@ var moveToGroup = function (entryId, groupId) { return client_1["default"].entry
     }
 }); };
 exports.moveToGroup = moveToGroup;
-var getEntries = function (offset, limit, groupId) {
+var getEntries = function (offset, limit, groupId, userId) {
     if (offset === void 0) { offset = 0; }
     if (limit === void 0) { limit = 10; }
     if (groupId === void 0) { groupId = 0; }
@@ -118,8 +120,9 @@ var getEntries = function (offset, limit, groupId) {
         skip: offset,
         take: limit
     };
+    findArgs.where = { userId: userId };
     if (!!groupId) {
-        findArgs.where = { groupId: groupId };
+        findArgs.where.groupId = groupId;
     }
     return client_1["default"].entry.findMany(findArgs);
 };

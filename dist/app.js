@@ -44,12 +44,14 @@ var cors_1 = __importDefault(require("cors"));
 var group_1 = __importDefault(require("./api/group"));
 var entry_1 = __importDefault(require("./api/entry"));
 var group_2 = require("./controllers/group");
+var validate_auth_1 = __importDefault(require("./middleware/validate-auth"));
 require('dotenv').config();
 var app = (0, express_1["default"])();
 var port = 3000;
 app.use((0, cors_1["default"])());
 app.use(express_1["default"].json());
 app.use(express_1["default"].urlencoded({ extended: true }));
+app.use(validate_auth_1["default"]);
 /** Routers */
 app.use('/group', group_1["default"]);
 app.use('/entry', entry_1["default"]);

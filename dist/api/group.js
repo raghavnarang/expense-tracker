@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -47,12 +58,13 @@ var group_validate_input_1 = require("./middleware/group-validate-input");
 var router = express_1["default"].Router();
 /** Get Groups */
 router.get('/list', group_validate_input_1.getGroupsValidate, (0, utils_1.asyncHandler)(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, offset, limit, includeEntries, entryOffset, entryLimit, result;
+    var _a, offset, limit, includeEntries, entryOffset, entryLimit, userId, result;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 _a = res.locals.data, offset = _a.offset, limit = _a.limit, includeEntries = _a.includeEntries, entryOffset = _a.entryOffset, entryLimit = _a.entryLimit;
-                return [4 /*yield*/, (0, group_1.getGroups)(offset, limit, includeEntries, entryOffset, entryLimit)];
+                userId = res.locals.user.userId;
+                return [4 /*yield*/, (0, group_1.getGroups)(offset, limit, includeEntries, entryOffset, entryLimit, userId)];
             case 1:
                 result = _b.sent();
                 return [2 /*return*/, res.status(200).json(result)];
@@ -61,12 +73,13 @@ router.get('/list', group_validate_input_1.getGroupsValidate, (0, utils_1.asyncH
 }); }));
 /** Create Group */
 router.post('/', group_validate_input_1.createGroupValidate, (0, utils_1.asyncHandler)(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var title, result;
+    var title, userId, result;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 title = res.locals.data.title;
-                return [4 /*yield*/, (0, group_1.createGroup)(title)];
+                userId = res.locals.user.userId;
+                throw new Error(__assign(__assign({}, res.locals.data), res.locals.user));
             case 1:
                 result = _a.sent();
                 return [2 /*return*/, res.status(200).json(result)];
