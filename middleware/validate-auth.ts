@@ -20,15 +20,15 @@ const verifyAuth = (req: Request, res: Response, next: NextFunction) => {
     auth
         .verifyIdToken(token)
         .then((decodedToken) => {
-            herokuLog.info('check', decodedToken)
+            console.log(decodedToken);
             res.locals.user = {
                 email: decodedToken.email,
                 userId: decodedToken.user_id
             }
-            return next();
+            next();
         })
         .catch((error) => {
-            return next(error);
+            next(error);
         });
 };
 

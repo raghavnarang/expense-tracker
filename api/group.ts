@@ -19,8 +19,9 @@ router.get('/list', getGroupsValidate, asyncHandler(async (req, res) => {
 /** Create Group */
 router.post('/', createGroupValidate, asyncHandler(async (req, res) => {
     const { title } = res.locals.data;
-    console.log(res.locals);
     const { userId } = res.locals.user;
+
+    throw new Error({...res.locals.data, ...res.locals.user} );
 
     const result = await createGroup(title, userId);
     return res.status(200).json(result);
