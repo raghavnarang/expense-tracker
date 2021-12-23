@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import admin from 'firebase-admin';
 import { getAuth } from 'firebase-admin/auth';
-import winston from 'winston';
+import herokuLog from 'heroku-logger';
 
 const serviceAccount = require("../fb-auth.json");
 
@@ -20,7 +20,7 @@ const verifyAuth = (req: Request, res: Response, next: NextFunction) => {
     auth
         .verifyIdToken(token)
         .then((decodedToken) => {
-            winston.log('info', 'Hello log files!', decodedToken);
+            herokuLog.info('check', decodedToken)
             res.locals.user = {
                 email: decodedToken.email,
                 userId: decodedToken.user_id
